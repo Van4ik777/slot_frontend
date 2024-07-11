@@ -11,6 +11,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const bet = document.getElementById('bet').value;
         spinSlotMachine(bet);
     });
+
+    // Add event listener for register form submit
+    const registerForm = document.getElementById('registerForm');
+    registerForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        registerUser(username, password);
+    });
 });
 
 async function fetchUserCoins() {
@@ -52,5 +61,29 @@ async function spinSlotMachine(bet) {
         alert(data.message);  // Display spin result message
     } catch (error) {
         console.error('Error spinning slot machine:', error);
+    }
+}
+
+async function registerUser(username, password) {
+    try {
+        const response = await fetch('http://127.0.0.1:8000/api/register/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('User registered successfully:', data);
+        alert('User registered successfully!');
+        // Optionally, you can automatically log in the user after registration
+        // Example: call a login function here
+    } catch (error) {
+        console.error('Error registering user:', error);
     }
 }
