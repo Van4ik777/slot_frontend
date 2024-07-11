@@ -5,14 +5,22 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Slot Machine</title>
 </head>
 <body>
     <form>
-        <input type="number" required>
-        <button>spin</button>
+        <label for="bet">Choose your bet:</label>
+        <select id="bet" required>
+            <option value="1">1</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="60">60</option>
+            <option value="100">100</option>
+        </select>
+        <button>Spin</button>
     </form>
 <script src="./app.js"></script>
 </body>
-
 </html>
