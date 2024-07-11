@@ -5,7 +5,7 @@ async function spin(){
       Headers: {
         'Content-Type': 'application/json'
       },
-      Body: JSON.parse({initial_money: 1000, stavka: 100}),
+      Body: JSON.stringify({initial_money: 1000, stavka: 100}),
     }
     )
     let data = res.json()
