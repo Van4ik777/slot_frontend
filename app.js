@@ -1,21 +1,18 @@
 let form = document.querySelector('form');
 let select = document.querySelector('#bet');
 let currSpin;
-let startMoney
+let startMoney = 1000;  // Initial value, will be updated after each spin
 
-async function getMoney()=>{
-    let res = await fetch('http://127.0.0.1:8000/api/coins/',{
-        methon: 'Get',
+async function getStartMoney() {
+    let res = await fetch('http://127.0.0.1:8000/api/user/coins/', {
+        method: 'GET',
         headers: {
-            'Content type': 'application/json'
+            'Content-Type': 'application/json'
         },
     });
     let data = await res.json();
     return data.coins;
-
-
 }
-
 
 async function spin(initial_money, stavka) {
     let res = await fetch('http://127.0.0.1:8000/api/spin/', {
