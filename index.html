@@ -1,16 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Slot Machine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot Machine App</title>
 </head>
 <body>
-    <form>
-        <label for="bet">Choose your bet:</label>
-        <select id="bet" required>
+    <h1>Slot Machine App</h1>
+
+    <div>
+        <p>User Coins: <span id="userCoins">Loading...</span></p>
+    </div>
+
+    <form id="spinForm">
+        <label for="bet">Select Bet:</label>
+        <select id="bet" name="bet">
             <option value="1">1</option>
             <option value="5">5</option>
             <option value="10">10</option>
@@ -19,8 +23,9 @@
             <option value="60">60</option>
             <option value="100">100</option>
         </select>
-        <button>Spin</button>
+        <button type="submit">Spin</button>
     </form>
-<script src="./app.js"></script>
+
+    <script src="app.js"></script>
 </body>
 </html>
