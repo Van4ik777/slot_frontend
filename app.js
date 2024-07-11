@@ -1,11 +1,11 @@
 async function spin(){
     let res = await fetch('http://127.0.0.1:8000/api/spin/',
     {
-      Method: 'POST',
-      Headers: {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json'
       },
-      Body: JSON.stringify({initial_money: 1000, stavka: 100}),
+      body: JSON.stringify({initial_money: 1000, stavka: 100}),
     }
     )
     let data = res.json()
