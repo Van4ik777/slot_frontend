@@ -13,10 +13,16 @@ let l31 = document.getElementById('l3-1')
 let l32 = document.getElementById('l3-2')
 let l33 = document.getElementById('l3-3')
 
+let bonusMessage = document.getElementById('bonus-message') 
 let currSpin
 let startMoney = 1000
 
 function setSpin(d) {
+    if (d.bonus_spins) {
+        bonusMessage.textContent = `You won ${d.bonus_spins} BONUS GAMES`
+    } else {
+        bonusMessage.textContent = '' 
+    }
     l11.innerHTML = d.l1[0]
     l12.innerHTML = d.l1[1]
     l13.innerHTML = d.l1[2]
@@ -28,6 +34,8 @@ function setSpin(d) {
     l31.innerHTML = d.l3[0]
     l32.innerHTML = d.l3[1]
     l33.innerHTML = d.l3[2]
+
+    
 }
 
 async function spin(initial_money, stavka){
