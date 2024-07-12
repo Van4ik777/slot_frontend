@@ -14,9 +14,9 @@ let l32 = document.getElementById('l3-2')
 let l33 = document.getElementById('l3-3')
 
 let currSpin
-let startMoney= 1000
+let startMoney = 1000
 
-function setSpin(d){
+function setSpin(d) {
     l11.innerHTML = d.l1[0]
     l12.innerHTML = d.l1[1]
     l13.innerHTML = d.l1[2]
@@ -28,10 +28,7 @@ function setSpin(d){
     l31.innerHTML = d.l3[0]
     l32.innerHTML = d.l3[1]
     l33.innerHTML = d.l3[2]
-
 }
-
-
 
 async function spin(initial_money, stavka){
     let res = await fetch('http://127.0.0.1:8000/api/spin/',
@@ -43,16 +40,21 @@ async function spin(initial_money, stavka){
       body: JSON.stringify({initial_money, stavka}),
     }
     )
-    let data = res.json()
+    let data = await res.json()//чат гпт 
+
     return data
 }
-
-form.addEventListener('submit',(e)=>{
+form.addEventListener('submit', (e) => {
     e.preventDefault()
+    let betValue = +bet.value
+    if (isNaN(betValue) || betValue <= 0) {
+        alert('Please enter a valid bet amount.')
+        return
+    }
     console.log(bet.value)
-    spin(startMoney,+bet.value).then(data=>{
+    spin(startMoney, betValue).then(data => {
         currSpin = data
-        startMoney= data.money
+        startMoney = data.money
         console.log(currSpin)
         setSpin(data)
     });
