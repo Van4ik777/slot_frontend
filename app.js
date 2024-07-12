@@ -19,7 +19,7 @@ let startMoney = 1000
 
 function setSpin(d) {
     if (d.message) {
-        bonusMessage.textContent = 'You won ${d.message} bonus games'
+        bonusMessage.textContent = `You won ${d.message} BONUS GAMES`
     } else {
         bonusMessage.textContent = '' 
     }
