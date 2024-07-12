@@ -31,12 +31,7 @@ function setSpin(d){
 
 }
 
-d={
-    'l1': [2, 1, 3],
-    'l2': [4, 3, 7],
-    'l3': [1, 2, 4]
-}
-setSpin(d)
+
 
 async function spin(initial_money, stavka){
     let res = await fetch('http://127.0.0.1:8000/api/spin/',
@@ -52,7 +47,7 @@ async function spin(initial_money, stavka){
     return data
 }
 
-form.addEventListener('submit',(e, setSpin)=>{
+form.addEventListener('submit',(e)=>{
     e.preventDefault()
     console.log(bet.value)
     spin(startMoney,+bet.value).then(data=>{
