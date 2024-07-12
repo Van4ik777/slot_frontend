@@ -19,7 +19,7 @@ let startMoney = 1000
 
 function setSpin(d) {
     if (d.message) {
-        bonusMessage.textContent = d.message
+        bonusMessage.textContent = `You won ${d.message} BONUS GAMES`
     } else {
         bonusMessage.textContent = '' 
     }
@@ -48,7 +48,7 @@ async function spin(initial_money, stavka){
       body: JSON.stringify({initial_money, stavka}),
     }
     )
-    let data = await res.json()//чат гпт 
+    let data = await res.json()//чат гпт ну и стили)
 
     return data
 }
@@ -56,7 +56,7 @@ form.addEventListener('submit', (e) => {
     e.preventDefault()
     let betValue = +bet.value
     if (isNaN(betValue) || betValue <= 0) {
-        alert('Please enter a valid bet amount.')
+        alert('куда так много')
         return
     }
     console.log(bet.value)
