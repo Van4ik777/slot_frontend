@@ -1,39 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slot Machine App</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
-    <h1>Slot Machine App</h1>
+    <h1>Slot machine</h1>
+    <p>Money:  <span id="usercoins">Loading...</span></p>
+    <form>
+        <form id="betForm">
+            <label for="Bet">Select Your bet</label>
+            <select id="Bet" required>
+                <option value="1">1</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="40">40</option>
+                <option value="60">60</option>
+                <option value="100">100</option>
+            </select>
+            <button type="submit">SPIN</button>
+        </form>
+    </form>
 
-    <div>
-        <p>User Coins: <span id="userCoins">Loading...</span></p>
+    <div class="main-slot">
+        <div style="display:flex;"> <p id="l1-1">1</p> <p id="l2-1">4</p><p id="l3-1">7</p> </div>
+        <div style="display:flex;"> <p id="l1-2">2</p> <p id="l2-2">5</p><p id="l3-2">8</p> </div>
+        <div style="display:flex;"> <p id="l1-3">3</p> <p id="l2-3">6</p><p id="l3-3">9</p> </div>
     </div>
 
-    <form id="spinForm">
-        <label for="bet">Select Bet:</label>
-        <select id="bet" name="bet">
-            <option value="1">1</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="60">60</option>
-            <option value="100">100</option>
-        </select>
-        <button type="submit">Spin</button>
-    </form>
-
-    <form id="registerForm">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Register</button>
-    </form>
-
-    <script src="app.js"></script>
+<script src="./app.js"></script>
 </body>
 </html>
