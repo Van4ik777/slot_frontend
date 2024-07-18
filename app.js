@@ -50,29 +50,47 @@ function setSpin(d) {
     l33.innerHTML = replaceSymbols(d.l3[2]);
 }
 
-async function spin(initial_money, stavka) {
-    let res = await fetch('http://127.0.0.1:8000/api/spin/', {
+async function register() {
+    let registerData = {
+        'username': 'vania',
+        'password': 'newpassword'
+    };
+    let res = await fetch('http://127.0.0.1:8000/api/register/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ initial_money, stavka }),
+        body: JSON.stringify(registerData)
     });
-    let data = await res.json();
-    return data;
+    if (res.status === 200) {
+        let data = await res.json();
+        return data.token;  // Return the token
+    } else {
+        let errorText = await res.text();
+        console.error('Registration failed:', errorText);
+        alert('Registration failed. Please check the console for details.');
+        throw new Error('Registration failed');
+    }
 }
 
-async function register() {
-    let res = await fetch('http://127.0.0.1:8000/api/register/', {
+async function spin(token, initial_money, stavka) {
+    let res = await fetch('http://127.0.0.1:8000/api/spin/', {
         method: 'POST',
-
-        body: JSON.stringify({
-            'username': 'vania',
-            'password': 'newpassword'
-        }),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        },
+        body: JSON.stringify({ initial_money, stavka }),
     });
-    let data = await res.json();
-    return data.money;
+    if (res.status === 200) {
+        let data = await res.json();
+        return data;
+    } else {
+        let errorText = await res.text();
+        console.error('Spin failed:', errorText);
+        alert('Spin failed. Please check the console for details.');
+        throw new Error('Spin failed');
+    }
 }
 
 form.addEventListener('submit', async (e) => {
@@ -84,15 +102,14 @@ form.addEventListener('submit', async (e) => {
     }
     console.log(bet.value);
 
-    if (startMoney === 1000) {
-        // Register and get the initial money if not already done
-        startMoney = await register();
-    }
-
-    spin(startMoney, betValue).then(data => {
+    try {
+        let token = await register();  // Register and get the token
+        let data = await spin(token, startMoney, betValue);  // Use the token to spin
         currSpin = data;
         startMoney = data.money;
         console.log(currSpin);
         setSpin(data);
-    });
+    } catch (error) {
+        console.error('Error:', error);
+    }
 });
