@@ -22,8 +22,7 @@ let token = null;  // Variable to store the token
 // Replace 'w' with '⭐️', 'b' with '🔔', and digits with emojis
 function replaceSymbols(s) {
     if (typeof s !== 'string') {
-        console.error(`Expected a string but got: ${typeof s}`);
-        return s;
+        s = String(s);  // Convert to string if not already
     }
     return s.replace(/w/g, '⭐️')
             .replace(/b/g, '🔔')
