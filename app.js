@@ -16,6 +16,8 @@ let l33 = document.getElementById('l3-3')
 let bonusMessage = document.getElementById('bonus-message') 
 let currSpin
 let startMoney = 1000
+//let startMoney
+let symbols = ['🍒', '🍋', '🍊', '🍉', '⭐️', '🔔', '🍇', '🍍'];
 
 function setSpin(d) {
     if (d.message) {
@@ -48,9 +50,27 @@ async function spin(initial_money, stavka){
       body: JSON.stringify({initial_money, stavka}),
     }
     )
-    let data = await res.json()//чат гпт ну и стили)
+    let data = await res.json()
 
     return data
+}
+
+async function register(initial_money, stavka){
+    let res = await fetch('http://127.0.0.1:8000/api/register/',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: {
+        'username' : 'vania',
+        'password' : 'newpassword'
+      },
+    }
+    )
+    let data = await res.json()
+    let money = data.money 
+    return [data, money]
 }
 form.addEventListener('submit', (e) => {
     e.preventDefault()

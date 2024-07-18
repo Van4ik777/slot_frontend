@@ -6,13 +6,31 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="main.css"> 
-    <title>Document</title>
+    <title>Slot Machine</title>
 </head>
 <body>
     <h1>Slot machine</h1>
-    <p>Money:  <span id="usercoins">Loading...</span></p>
-    <form>
+    <div class="main-slot">
+        <div class="row">
+            <p id="l1-1">🍒</p>
+            <p id="l1-2">🍊</p>
+            <p id="l1-3">🍋</p>
+        </div>
+        <div class="row">
+            <p id="l2-1">🍉</p>
+            <p id="l2-2">🍇</p>
+            <p id="l2-3">🍓</p>
+        </div>
+        <div class="row">
+            <p id="l3-1">🍍</p>
+            <p id="l3-2">🥝</p>
+            <p id="l3-3">🍌</p>
+        </div>
+    </div>
+    <div class="info-container">
+        <p>Money: <span id="usercoins">Loading...</span></p>
         <form id="betForm">
+            <button type="submit" class="spin-button">SPIN</button>
             <label for="Bet">Select Your bet</label>
             <select id="Bet" required>
                 <option value="1">1</option>
@@ -23,16 +41,11 @@
                 <option value="60">60</option>
                 <option value="100">100</option>
             </select>
-            <button type="submit">SPIN</button>
         </form>
-    </form>
-    <h2 id="bonus-message"></h2>
-    <div class="main-slot">
-        <div style="display:flex;"> <p id="l1-1">1</p> <p id="l2-1">4</p><p id="l3-1">7</p> </div>
-        <div style="display:flex;"> <p id="l1-2">2</p> <p id="l2-2">5</p><p id="l3-2">8</p> </div>
-        <div style="display:flex;"> <p id="l1-3">3</p> <p id="l2-3">6</p><p id="l3-3">9</p> </div>
     </div>
+    
+    <h2 id="bonus-message"></h2>
 
-<script src="./app.js"></script>
+    <script src="./app.js"></script>
 </body>
 </html>
