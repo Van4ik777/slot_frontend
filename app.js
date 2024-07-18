@@ -17,9 +17,14 @@ let bonusMessage = document.getElementById('bonus-message');
 let currSpin;
 let startMoney = 1000;  // Default value, will be overwritten by registration
 let symbols = ['🍒', '🍋', '🍊', '🍉', '⭐️', '🔔', '🍇', '🍍'];
+let token = null;  // Variable to store the token
 
 // Replace 'w' with '⭐️', 'b' with '🔔', and digits with emojis
 function replaceSymbols(s) {
+    if (typeof s !== 'string') {
+        console.error(`Expected a string but got: ${typeof s}`);
+        return s;
+    }
     return s.replace(/w/g, '⭐️')
             .replace(/b/g, '🔔')
             .replace(/1/g, '🍒')
@@ -52,7 +57,7 @@ function setSpin(d) {
 
 async function register() {
     let registerData = {
-        'username': 'vanwqeia',
+        'username': 'vaniуa',
         'password': 'newpassword'
     };
     let res = await fetch('http://127.0.0.1:8000/api/register/', {
@@ -103,7 +108,11 @@ form.addEventListener('submit', async (e) => {
     console.log(bet.value);
 
     try {
-        let token = await register();  // Register and get the token
+        if (!token) {
+            // Register and get the token if not already done
+            token = await register();
+        }
+
         let data = await spin(token, startMoney, betValue);  // Use the token to spin
         currSpin = data;
         startMoney = data.money;
