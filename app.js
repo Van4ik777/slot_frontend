@@ -1,5 +1,6 @@
 let form = document.querySelector('form');
 let bet = document.getElementById('Bet');
+let userCoins = document.getElementById('usercoins');
 
 let l11 = document.getElementById('l1-1');
 let l12 = document.getElementById('l1-2');
@@ -56,7 +57,7 @@ function setSpin(d) {
 
 async function register() {
     let registerData = {
-        'username': 'vaniуa1',
+        'username': 'vaniйцуa',
         'password': 'newpassword'
     };
     let res = await fetch('http://127.0.0.1:8000/api/register/', {
@@ -74,6 +75,25 @@ async function register() {
         console.error('Registration failed:', errorText);
         alert('Registration failed. Please check the console for details.');
         throw new Error('Registration failed');
+    }
+}
+
+async function getUserDetails(token) {
+    let res = await fetch('http://127.0.0.1:8000/api/user/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        }
+    });
+    if (res.status === 200) {
+        let data = await res.json();
+        return data;  // Return user details
+    } else {
+        let errorText = await res.text();
+        console.error('Fetching user details failed:', errorText);
+        alert('Fetching user details failed. Please check the console for details.');
+        throw new Error('Fetching user details failed');
     }
 }
 
@@ -110,14 +130,34 @@ form.addEventListener('submit', async (e) => {
         if (!token) {
             // Register and get the token if not already done
             token = await register();
+
+            // Get user details after registration
+            let userDetails = await getUserDetails(token);
+            startMoney = userDetails.money;  // Set the user's money
+            userCoins.textContent = startMoney;  // Update the displayed money
         }
 
         let data = await spin(token, startMoney, betValue);  // Use the token to spin
         currSpin = data;
         startMoney = data.money;
+        userCoins.textContent = startMoney;  // Update the displayed money after spin
         console.log(currSpin);
         setSpin(data);
     } catch (error) {
         console.error('Error:', error);
     }
 });
+
+// Initial setup to register and fetch user details
+(async () => {
+    try {
+        if (!token) {
+            token = await register();
+            let userDetails = await getUserDetails(token);
+            startMoney = userDetails.money;
+            userCoins.textContent = startMoney;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+})();
