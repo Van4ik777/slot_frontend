@@ -56,7 +56,7 @@ function setSpin(d) {
 
 async function register() {
     let registerData = {
-        'username': 'vaniуa',
+        'username': 'vaniуa1',
         'password': 'newpassword'
     };
     let res = await fetch('http://127.0.0.1:8000/api/register/', {
