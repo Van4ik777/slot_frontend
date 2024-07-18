@@ -18,6 +18,17 @@ let currSpin
 let startMoney = 1000
 //let startMoney
 let symbols = ['🍒', '🍋', '🍊', '🍉', '⭐️', '🔔', '🍇', '🍍'];
+function replaceSymbols(s) {
+    return s.replace(/w/g, '⭐️')
+            .replace(/b/g, '🔔')
+            .replace(/1/g, '🍒')
+            .replace(/2/g, '🍋')
+            .replace(/3/g, '🍊')
+            .replace(/4/g, '🍉')
+            .replace(/5/g, '⭐️')
+            .replace(/6/g, '🔔')
+            .replace(/7/g, '🍇');
+}
 
 function setSpin(d) {
     if (d.message) {
@@ -25,17 +36,17 @@ function setSpin(d) {
     } else {
         bonusMessage.textContent = '' 
     }
-    l11.innerHTML = d.l1[0]
-    l12.innerHTML = d.l1[1]
-    l13.innerHTML = d.l1[2]
+    l11.innerHTML = replaceSymbols(d.l1[0]);
+    l12.innerHTML = replaceSymbols(d.l1[1]);
+    l13.innerHTML = replaceSymbols(d.l1[2]);
 
-    l21.innerHTML = d.l2[0]
-    l22.innerHTML = d.l2[1]
-    l23.innerHTML = d.l2[2]
+    l21.innerHTML = replaceSymbols(d.l2[0]);
+    l22.innerHTML = replaceSymbols(d.l2[1]);
+    l23.innerHTML = replaceSymbols(d.l2[2]);
 
-    l31.innerHTML = d.l3[0]
-    l32.innerHTML = d.l3[1]
-    l33.innerHTML = d.l3[2]
+    l31.innerHTML = replaceSymbols(d.l3[0]);
+    l32.innerHTML = replaceSymbols(d.l3[1]);
+    l33.innerHTML = replaceSymbols(d.l3[2]);
 
     
 }
@@ -55,23 +66,21 @@ async function spin(initial_money, stavka){
     return data
 }
 
-async function register(initial_money, stavka){
-    let res = await fetch('http://127.0.0.1:8000/api/register/',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: {
-        'username' : 'vania',
-        'password' : 'newpassword'
-      },
-    }
-    )
-    let data = await res.json()
-    let money = data.money 
-    return [data, money]
+async function register() {
+    let res = await fetch('http://127.0.0.1:8000/api/register/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'username': 'vania',
+            'password': 'newpassword'
+        }),
+    });
+    let data = await res.json();
+    return data.money;
 }
+
 form.addEventListener('submit', (e) => {
     e.preventDefault()
     let betValue = +bet.value
