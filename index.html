@@ -45,7 +45,17 @@
     </div>
     
     <h2 id="bonus-message"></h2>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let cookie = document.cookie.split('; ').find(row => row.startsWith('token='));
+            
+            if (cookie) {
+                window.location.href = 'index.html';
+            } else {
+                window.location.href = 'reg.html';
+            }
+        });
+    </script>
     <script src="./app.js"></script>
 </body>
 </html>
