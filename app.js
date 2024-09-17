@@ -1,68 +1,5 @@
-// Function to get token from cookies
-function getToken() {
-    let cookie = document.cookie.split('; ').find(row => row.startsWith('token='));
-    return cookie ? cookie.split('=')[1] : null;
-}
-
-// Function to verify token
-async function verifyToken(token) {
-    let res = await fetch('http://127.0.0.1:8000/api/user/', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`
-        }
-    });
-    return res.status === 200;
-}
-
-// Redirect to login page if token is not valid
-async function checkAuthentication() {
-    let token = getToken();
-    if (!token || !(await verifyToken(token))) {
-        window.location.href = 'login.html'; // Redirect to login page
-    }
-}
-
-// Game logic
-async function getUserDetails(token) {
-    let res = await fetch('http://127.0.0.1:8000/api/user/', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`
-        }
-    });
-    if (res.status === 200) {
-        let data = await res.json();
-        return data;
-    } else {
-        console.error('Fetching user details failed');
-        throw new Error('Fetching user details failed');
-    }
-}
-
-async function spin(token, initial_money, stavka) {
-    let res = await fetch('http://127.0.0.1:8000/api/spin/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`
-        },
-        body: JSON.stringify({ initial_money, stavka }),
-    });
-    if (res.status === 200) {
-        let data = await res.json();
-        return data;
-    } else {
-        console.error('Spin failed');
-        throw new Error('Spin failed');
-    }
-}
-
 document.addEventListener('DOMContentLoaded', async () => {
-    await checkAuthentication(); // Check authentication when page loads
-
+    // Check if the elements exist before adding event listeners
     let form = document.getElementById('game-form');
     let bet = document.getElementById('Bet');
     let userCoins = document.getElementById('usercoins');
@@ -116,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         l33.innerHTML = replaceSymbols(d.l3[2]);
     }
 
-    form.addEventListener('submit', async (e) => {
+    form?.addEventListener('submit', async (e) => {
         e.preventDefault();
         let betValue = +bet.value;
         if (isNaN(betValue) || betValue <= 0) {
@@ -149,10 +86,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Registration logic
 let registerForm = document.getElementById('register-form');
 
-registerForm.addEventListener('submit', async (e) => {
+registerForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
