@@ -43,7 +43,12 @@
             </select>
         </form>
     </div>
-    
+    <script>
+    let cookie = document.cookie.split('; ').find(row => row.startsWith('token='));
+    if (!cookie) {
+        window.location.href = './areg.html'; 
+    }
+</script>
     <h2 id="bonus-message"></h2>
     <script src="./app.js"></script>
 </body>
