@@ -1,7 +1,7 @@
 let form = document.getElementById('game-form');
 let bet = document.getElementById('Bet');
 let userCoins = document.getElementById('usercoins');
-
+console.log(document.getElementById('game-form'));
 let l11 = document.getElementById('l1-1');
 let l12 = document.getElementById('l1-2');
 let l13 = document.getElementById('l1-3');
