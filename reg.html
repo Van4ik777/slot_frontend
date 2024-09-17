@@ -19,9 +19,9 @@
         let cookie = document.cookie.split('; ').find(row => row.startsWith('token='));
         
         if (cookie) {
-            window.location.href = 'index.html';
+            window.location.href = './index.html';
         } else {
-            window.location.href = 'reg.html';
+            window.location.href = './reg.html';
         }
     });
 </script>
