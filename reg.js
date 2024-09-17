@@ -23,7 +23,7 @@ form.addEventListener('submit', async (e) => {
             let data = await res.json();
             alert('Registration successful! Redirecting to game page.');
             document.cookie = `token=${data.token}; path=/`;  // Сохраняем токен в cookie
-            window.location.href = 'game.html';  // Переход на страницу игры
+            window.location.href = 'index.html';  // Переход на страницу игры
         } else {
             let errorText = await res.text();
             alert(`Registration failed: ${errorText}`);
