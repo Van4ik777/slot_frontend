@@ -22,8 +22,8 @@ form.addEventListener('submit', async (e) => {
         if (res.status === 200) {
             let data = await res.json();
             alert('Registration successful! Redirecting to game page.');
-            document.cookie = `token=${data.token}; path=/`;  // Сохраняем токен в cookie
-            window.location.href = 'index.html';  // Переход на страницу игры
+            document.cookie = `token=${data.token}; path=/`;  
+            window.location.href = 'index.html';  
         } else {
             let errorText = await res.text();
             alert(`Registration failed: ${errorText}`);
