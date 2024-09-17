@@ -1,4 +1,4 @@
-let form = document.querySelector('form');
+let form = document.getElementById('game-form');
 let bet = document.getElementById('Bet');
 let userCoins = document.getElementById('usercoins');
 
@@ -16,14 +16,12 @@ let l33 = document.getElementById('l3-3');
 
 let bonusMessage = document.getElementById('bonus-message');
 let currSpin;
-let startMoney = 1000;  // Default value, will be overwritten by registration
-let symbols = ['🍒', '🍋', '🍊', '🍉', '⭐️', '🔔', '🍇', '🍍'];
-let token = null;  // Variable to store the token
+let startMoney = 1000;
+let token = null;
 
-// Replace 'w' with '⭐️', 'b' with '🔔', and digits with emojis
 function replaceSymbols(s) {
     if (typeof s !== 'string') {
-        s = String(s);  // Convert to string if not already
+        s = String(s);
     }
     return s.replace(/w/g, '⭐️')
             .replace(/b/g, '🔔')
@@ -55,29 +53,6 @@ function setSpin(d) {
     l33.innerHTML = replaceSymbols(d.l3[2]);
 }
 
-async function register() {
-    let registerData = {
-        'username': 'vaniйцуa',
-        'password': 'newpassword'
-    };
-    let res = await fetch('http://127.0.0.1:8000/api/register/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(registerData)
-    });
-    if (res.status === 200) {
-        let data = await res.json();
-        return data.token;  // Return the token
-    } else {
-        let errorText = await res.text();
-        console.error('Registration failed:', errorText);
-        alert('Registration failed. Please check the console for details.');
-        throw new Error('Registration failed');
-    }
-}
-
 async function getUserDetails(token) {
     let res = await fetch('http://127.0.0.1:8000/api/user/', {
         method: 'GET',
@@ -88,11 +63,9 @@ async function getUserDetails(token) {
     });
     if (res.status === 200) {
         let data = await res.json();
-        return data;  // Return user details
+        return data;
     } else {
-        let errorText = await res.text();
-        console.error('Fetching user details failed:', errorText);
-        alert('Fetching user details failed. Please check the console for details.');
+        console.error('Fetching user details failed');
         throw new Error('Fetching user details failed');
     }
 }
@@ -110,9 +83,7 @@ async function spin(token, initial_money, stavka) {
         let data = await res.json();
         return data;
     } else {
-        let errorText = await res.text();
-        console.error('Spin failed:', errorText);
-        alert('Spin failed. Please check the console for details.');
+        console.error('Spin failed');
         throw new Error('Spin failed');
     }
 }
@@ -124,39 +95,39 @@ form.addEventListener('submit', async (e) => {
         alert('Invalid bet amount');
         return;
     }
-    console.log(bet.value);
 
     try {
-        if (!token) {
-            // Register and get the token if not already done
-            token = await register();
-
-            // Get user details after registration
-            let userDetails = await getUserDetails(token);
-            startMoney = userDetails.money;  // Set the user's money
-            userCoins.textContent = startMoney;  // Update the displayed money
+        let cookie = document.cookie.split('; ').find(row => row.startsWith('token='));
+        if (!cookie) {
+            throw new Error('Token not found');
         }
+        token = cookie.split('=')[1];
 
-        let data = await spin(token, startMoney, betValue);  // Use the token to spin
+        let userDetails = await getUserDetails(token);
+        startMoney = userDetails.money;
+        userCoins.textContent = startMoney;
+
+        let data = await spin(token, startMoney, betValue);
         currSpin = data;
         startMoney = data.money;
-        userCoins.textContent = startMoney;  // Update the displayed money after spin
-        console.log(currSpin);
+        userCoins.textContent = startMoney;
         setSpin(data);
     } catch (error) {
         console.error('Error:', error);
     }
 });
 
-// Initial setup to register and fetch user details
 (async () => {
     try {
-        if (!token) {
-            token = await register();
-            let userDetails = await getUserDetails(token);
-            startMoney = userDetails.money;
-            userCoins.textContent = startMoney;
+        let cookie = document.cookie.split('; ').find(row => row.startsWith('token='));
+        if (!cookie) {
+            throw new Error('Token not found');
         }
+        token = cookie.split('=')[1];
+
+        let userDetails = await getUserDetails(token);
+        startMoney = userDetails.money;
+        userCoins.textContent = startMoney;
     } catch (error) {
         console.error('Error:', error);
     }
